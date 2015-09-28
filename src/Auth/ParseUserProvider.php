@@ -21,6 +21,11 @@ class ParseUserProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
+        // check current user exist
+        $currentUser = ParseUser::getCurrentUser();
+        if ($currentUser->getObjectId() == $identifier)
+            return $currentUser;
+            
         $query = new ParseQuery('_User');
 
         return $query->get($identifier, true);
